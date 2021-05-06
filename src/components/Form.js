@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Form,
@@ -10,20 +10,49 @@ import {
   Input,
   Space,
   PageHeader,
-  Alert
+  Alert,
+  message
 } from 'antd'
 
 import { CarOutlined, IdcardOutlined } from '@ant-design/icons'
 
 import styles from '@/styles/Home.module.css'
 
+import { hasRestriction } from '@/lib/prediction'
+
+message.config({
+  duration: 4,
+  maxCount: 1
+})
+
 export default function PredictorForm () {
+  const [resultMessage, setMessage] = useState('')
+
   const onFinish = (values) => {
-    console.log('Success:', values)
+    const { licensePlate, date, time } = values
+
+    // reset message cycle
+    setMessage(null)
+
+    // validate license code
+    let lastDigit = licensePlate.slice(-1)
+    lastDigit = parseFloat(lastDigit)
+
+    if (typeof lastDigit !== 'number' || Number.isNaN(lastDigit)) {
+      message.error('Número de placa no válido')
+      return
+    }
+
+    // eslint-disable-next-line no-use-before-define
+    const isRestricted = hasRestriction(lastDigit, date, time)
+    setMessage(
+      `El vehículo ${isRestricted ? 'no puede' : ' puede'} ${'circular'}`
+    )
   }
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+  const onFinishFailed = () => {
+    message.warning('Por favor, ingresa la información solicitada')
+    setMessage(null)
   }
 
   return (
@@ -60,7 +89,7 @@ export default function PredictorForm () {
             >
               <Input
                 className={styles.input}
-                placeholder="Número de placa"
+                placeholder="Número de placa completo"
                 prefix={<IdcardOutlined />}
                 value
               />
@@ -83,7 +112,7 @@ export default function PredictorForm () {
               ]}
               name="date"
             >
-              <DatePicker style={{ width: '80%' }} />
+              <DatePicker format="dddd DD MMMM" style={{ width: '80%' }} />
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={12} xl={12}>
@@ -91,7 +120,12 @@ export default function PredictorForm () {
               rules={[{ required: true, message: 'Debes seleccionar la hora' }]}
               name="time"
             >
-              <TimePicker style={{ width: '80%' }} />
+              <TimePicker
+                format="HH:mm"
+                showNow={false}
+                showSecond={false}
+                style={{ width: '80%' }}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -104,7 +138,7 @@ export default function PredictorForm () {
         </Row>
         <Row style={{ marginTop: 20, marginRight: 20 }}>
           <Col span={24}>
-            <Alert message="Success Text" type="success" />
+            {resultMessage && <Alert message={resultMessage} type="success" />}
           </Col>
         </Row>
       </Form>
