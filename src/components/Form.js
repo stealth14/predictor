@@ -34,7 +34,7 @@ export default function PredictorForm () {
     // reset message cycle
     setMessage(null)
 
-    // validate license code
+    // validates license code
     let lastDigit = licensePlate.slice(-1)
     lastDigit = parseFloat(lastDigit)
 
@@ -82,7 +82,7 @@ export default function PredictorForm () {
               rules={[
                 {
                   required: true,
-                  message: 'Debes ingresar la placa de tu vehiculo'
+                  message: 'Debes ingresar la placa de tu vehículo'
                 }
               ]}
               name="licensePlate"
