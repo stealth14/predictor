@@ -26,12 +26,12 @@ npm run dev
 - data validation 
 - regional input pickers
 
-#### Technologies / Libraries
+#### Technologies / Languajes / Libraries
 - reactjs + ECMAScript 2020
 - nextjs + vercel automated deployment
 - antd
 
-#### Code formtting tools
+#### Code formatting tools
 - eslint
 - prettier
 
