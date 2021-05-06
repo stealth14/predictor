@@ -71,7 +71,7 @@ export default function PredictorForm () {
               }}
               className="site-page-header"
               title="Pico y placa"
-              subTitle="Chequeo express"
+              subTitle="Chequeo express para Quito"
               backIcon={false}
             />
           </Col>
@@ -89,7 +89,7 @@ export default function PredictorForm () {
             >
               <Input
                 className={styles.input}
-                placeholder="Número de placa completo"
+                placeholder="Placa completa"
                 prefix={<IdcardOutlined />}
                 value
               />
