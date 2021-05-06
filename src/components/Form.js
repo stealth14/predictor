@@ -96,7 +96,7 @@ export default function PredictorForm () {
           </Col>
         </Row>
         <Row justify="center" gutter={24}>
-          <Col style={{ marginLeft: 30, marginTop: 10 }} span={24}>
+          <Col span={24}>
             <Button type="primary" htmlType="submit">
               Comprobar
             </Button>{' '}
