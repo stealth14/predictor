@@ -1,11 +1,14 @@
-import styles from "../styles/Home.module.css";
-import "antd/dist/antd.css";
-import Form from "@/components/Form";
+import React from 'react'
+import 'antd/dist/antd.css'
+import Form from '@/components/Form'
+import { ConfigProvider } from 'antd'
 
-export default function Home() {
+import esES from 'antd/lib/locale/es_ES'
+
+export default function Home () {
   return (
-    <div className={styles.container}>
+    <ConfigProvider locale={esES}>
       <Form />
-    </div>
-  );
+    </ConfigProvider>
+  )
 }
